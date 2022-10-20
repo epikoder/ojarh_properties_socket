@@ -2,7 +2,7 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
     entry: './src/index.ts',
-    mode: "development",
+    mode: process.env.APP_ENV || "development",
     output: {
         filename: 'index.js', // <-- Important
         libraryTarget: 'this' // <-- Important
