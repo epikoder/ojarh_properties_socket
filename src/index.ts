@@ -20,7 +20,6 @@ const io = new Server(server, {
 
 io.use(async (socket, next) => {
 	try {
-		if (socket.request.headers.referer?.includes('8000')) return next()
 		const id = socket.request.headers.id! as string
 		const u = await authenticateUser(id)
 		if (u === undefined) {
@@ -74,7 +73,7 @@ io.on('connection', (socket) => {
 							now,
 							now
 						])
-						console.log(_res)
+
 						socket.emit(ev, { ...m, created_at: new Date() })
 						socket.broadcast.emit(ev, { ...m, created_at: new Date() })
 					} catch (error) {
@@ -106,6 +105,6 @@ io.on('connection', (socket) => {
 	})
 })
 
-server.listen(8000, () => {
-	console.log('listening on *:8000');
+server.listen(process.env.PORT || 3000, () => {
+	console.log('listening on *:', process.env.PORT || 3000);
 });
